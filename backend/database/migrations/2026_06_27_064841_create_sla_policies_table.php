@@ -13,7 +13,33 @@ return new class extends Migration
     {
         Schema::create('sla_policies', function (Blueprint $table) {
             $table->id();
+
+            // Organization
+            $table->foreignId('organization_id')
+                ->constrained()
+                ->cascadeOnDelete();
+
+            // Policy name
+            $table->string('name');
+
+            // Ticket priority this SLA applies to
+            $table->enum('priority', [
+                'Low',
+                'Medium',
+                'High',
+                'Critical'
+            ]);
+
+            // Response & resolution times (in minutes)
+            $table->integer('response_time');
+            $table->integer('resolution_time');
+
+            // Active policy
+            $table->boolean('is_active')->default(true);
+
             $table->timestamps();
+
+            $table->unique(['organization_id', 'priority']);
         });
     }
 

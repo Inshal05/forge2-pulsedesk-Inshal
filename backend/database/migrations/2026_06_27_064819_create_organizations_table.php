@@ -13,6 +13,22 @@ return new class extends Migration
     {
         Schema::create('organizations', function (Blueprint $table) {
             $table->id();
+
+            // Basic organization information
+            $table->string('name');
+            $table->string('slug')->unique();
+            $table->string('domain')->nullable();
+
+            // Subscription plan
+            $table->enum('plan', ['free', 'pro', 'enterprise'])
+                  ->default('free');
+
+            // Organization status
+            $table->boolean('is_active')->default(true);
+
+            // Store custom settings/preferences
+            $table->json('settings')->nullable();
+
             $table->timestamps();
         });
     }
