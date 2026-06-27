@@ -23,7 +23,8 @@
       }                                                                                                                                               
                                                                                                                                                       
       public function store(StoreTicketRequest $request): JsonResponse                                                                                
-      {                                                                                                                                               
+      {        
+        // dd($request->user(), $request->user()->id);                                                                                                                                       
           $ticket = Ticket::create([                                                                                                                  
               'organization_id' => $request->user()->organization_id,                                                                                 
               'user_id'         => $request->user()->id,                                                                                              

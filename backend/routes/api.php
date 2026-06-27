@@ -12,6 +12,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', function ($request) {
         return $request->user();
     });
+    Route::post('/test', function () {
+    dd('API WORKING');
+});
 
     Route::apiResource('tickets', TicketController::class);
 
