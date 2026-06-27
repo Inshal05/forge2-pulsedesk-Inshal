@@ -2,24 +2,49 @@
 
 namespace Database\Seeders;
 
+use App\Models\Organization;
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
-    use WithoutModelEvents;
-
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
-        // User::factory(10)->create();
+        $organization = Organization::create([
+            'name' => 'Acme Inc',
+            'slug' => 'acme-inc',
+            'domain' => null,
+            'plan' => 'free',
+            'is_active' => true,
+            'settings' => [],
+        ]);
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        User::create([
+            'organization_id' => $organization->id,
+            'name' => 'Admin User',
+            'email' => 'admin@acme.test',
+            'password' => Hash::make('password'),
+            'role' => 'admin',
+            'is_active' => true,
+        ]);
+
+        User::create([
+            'organization_id' => $organization->id,
+            'name' => 'Agent User',
+            'email' => 'agent@acme.test',
+            'password' => Hash::make('password'),
+            'role' => 'agent',
+            'is_active' => true,
+        ]);
+
+        User::create([
+            'organization_id' => $organization->id,
+            'name' => 'Customer User',
+            'email' => 'customer@acme.test',
+            'password' => Hash::make('password'),
+            'role' => 'customer',
+            'is_active' => true,
         ]);
     }
 }
